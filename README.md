@@ -33,15 +33,19 @@ Below we provide a step-by-step guide for getting started with the competition.
 You can download the data from [https://gin.g-node.org/cajal/Sensorium2022](https://gin.g-node.org/cajal/Sensorium2022) and place it in `sensorium/notebooks/data`.
 **Note:** Downloading the files all at once as a directory does lead to unfortunate errors. Thus, all datastes have to be downloaded individually.
 
-## 3. Run the example notebooks
-
 ### **Start Jupyterlab environment**
 ```
 cd sensorium/
-docker-compose run -d -p 10101:8888 jupyterlab
+# docker-compose run -d -p 10101:8888 jupyterlab
+docker compose run -d -p 10101:8888 jupyterlab # on cin cluster
 ```
-now, type in `localhost:10101` in your favorite browser, and you are ready to go!
-
+now, type in `localhost:10101` in your favorite browser, and you are ready to go! -> not yet if you are on the cin cluster
+### ** if you are on the cin cluster**
+After successfully building the image (check with docker images), you run the following command to start a new container
+```
+docker run -d --name USERNAME_CONTAINERNAME --restart unless-stopped --gpus all  -e JUPYTER_PASSWORD=YOURPASSWORD  -p 1288:8888 -v $PWD:/project -v $PWD/notebooks:/notebooks sensorium
+```
+Upon successful instantiation, you can open a port from your local laptop and connected to the 1288 port you opened by running the command above.
 
 ## **Competition example notebooks**
 We provide notebooks that illustrate the structure of our data, our baselines models, and how to make a submission to the competition.
